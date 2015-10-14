@@ -1,0 +1,27 @@
+---
+title: "Getting comfortable with `ggplot2`"
+author: "Derek Nedveck || dnedveck.com || @dnedveck"
+date: "October 23, 2015"
+output: ioslides_presentation
+---
+
+## Who am I
+
+- PhD candidate in Plant Biological Sciences, University Minnesota-Twin Cities
+- Thesis on mutalistic interactions
+ - genomics, greenhouse experiments
+- Quantified Self: time, weight
+
+## What am I going to cover
+
+- Philosophy of `ggplot2`
+- graphing
+- themes
+
+## Hadleyverse
+
+- `ggplot2`
+- `dplyr`
+- `tidyr`
+- `lubridate`
+
