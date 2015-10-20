@@ -26,6 +26,7 @@ library(ggplot2)
 
 - Philosophy of `ggplot2`
 - graphing
+- colors
 - themes
 
 # Why `ggplot2`
@@ -39,11 +40,13 @@ Data science toolkit in R
 - `tidyr`
 - `lubridate`
 
-## 
+also: `knitr`
+
+## why ggplot2
 
 abstraction lets you do things quickly
 
-
+conceptual basis for plotting
 
 
 
@@ -52,6 +55,12 @@ abstraction lets you do things quickly
 # Grammar of Graphics
 
 
+
+## plotting systems
+
+base `R` = paper and pencil
+
+ggplot2 layers, transformations, etc. and this gets translated to "paper and pencil"
 
 
 # Building a plot in `ggplot2`
@@ -85,15 +94,170 @@ ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) +
 ^*let's take a moment to appreciate the automatically generated legend*^
 
 
+## Using stat
+
+Adding a linear regression lines based on species
+
+```{r, eval = FALSE}
+ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species)) + 
+  stat_smooth(method="lm", aes(color = Species))
+```
+
+## Using stat
+
+```{r echo=FALSE}
+ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species)) + 
+  stat_smooth(method="lm", aes(color = Species))
+```
+
+## Facets
+
+
+## Arranging plots
+
+unfortunately there's no way to arrange plots included in `ggplot2`, but there is:
+
+```{r}
+library(gridExtra)
+```
+
+```{r eval=FALSE}
+grid.arrange()
+```
+
+
+
+
 # Defining Color Palettes
 
+## built in color palettes
+
+
 ## Using a new color palette
-Viridis
+fancy new Viridis
 
 ![Viridis](./content/viridis.png)
 
 
+## using this new color palette in ggplot2
+
+```{r}
+library(viridis)
+```
+
+
+They were nice enough to include `ggplot2` specific functions:
+
+```{r eval=FALSE}
+scale_color_viridis()
+```
+
+
+
+## What if you have a specific color scheme that you want to work with?
+
+```{r eval = FALSE}
+scale_colour_manual()
+```
+
+
+## R packages for color 
+
+```{r, eval=FALSE}
+library(RColorBrewer)
+library(ggthemes) # we'll get to this later
+```
+
+
 # Using Themes
 
+## what themes look like
 
+```{r echo=FALSE}
+# making four plots to then later display in a grid
+
+g.bw <- ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species)) + 
+  stat_smooth(method="lm", aes(color = Species)) + 
+  theme_bw() + ggtitle("theme_bw")
+g.minimal <- ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species)) + 
+  stat_smooth(method="lm", aes(color = Species)) + 
+  theme_minimal() + ggtitle("theme_minimal")
+g.linedraw <- ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species)) + 
+  stat_smooth(method="lm", aes(color = Species)) + 
+  theme_linedraw() + ggtitle("theme_linedraw")
+g.grey <- ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species)) + 
+  stat_smooth(method="lm", aes(color = Species)) + 
+  theme_grey() + ggtitle("theme_grey AKA default")
+```
+
+```{r, echo = FALSE, fig.height=5, fig.width=9}
+grid.arrange(g.bw, g.minimal, g.linedraw, g.grey)
+```
+
+
+## defining your own theme
+
+```{r}
+theme_dned <- theme_bw() +
+  theme(axis.text = element_text(size = rel(0.8),colour = "grey50"),
+        plot.title = element_text(size = rel(1.2)),
+        panel.grid.major = element_line(colour = "#643B0F"),
+        panel.grid.minor = element_line(colour = NA ),
+        panel.background = element_rect( fill = "#EFE0B9" ),
+        plot.background = element_rect(fill = "#FFFFF0"))
+
+ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species)) + 
+  stat_smooth(method="lm", aes(color = Species)) + 
+  theme_dned
+```
+
+
+## Setting themes
+
+```{r}
+theme_set(theme_dned)
+```
+
+now you don't have to keep adding `+ theme_dned()` to each plot
+
+## plot with new set theme
+
+```{r}
+ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species)) + 
+  stat_smooth(method="lm", aes(color = Species))
+```
+
+
+## There's also a ton more premade ones
+
+ggthemes: https://github.com/jrnold/ggthemes
+```{r}
+library(ggthemes)
+```
+
+... which includes a couple geoms, themes, and colors. It's nice. 
+
+# Going out and doing your own plotting
+
+## Here's some resources
+
+Cookbooks / cheatsheets
+
+- [`ggplot2` docs](http://docs.ggplot2.org/current/)
+- Zev Ross' [ggplot2 Cheatsheet](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/)
+- Winston Chang's [Cookbook for R](http://www.cookbook-r.com/Graphs/)
+- [`ggplot2` GitHub repo](https://github.com/hadley/ggplot2)
+
+## Books 
+
+- [R Graphics Cookbook by Winston Chang](http://amzn.to/1GR9bGg)
+- [ggplot2 book by Hadley Wickham](http://amzn.to/1ZUNAbB)
 
