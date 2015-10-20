@@ -1,9 +1,19 @@
 ---
 title: "Getting comfortable with `ggplot2`"
-author: "Derek Nedveck || dnedveck.com || @dnedveck"
+author: "Derek Nedveck"
+company: "Unviersity of Minnesota"
+www: "dnedveck.com"
+github: "dnedveck"
+twitter: "@dnedveck"
 date: "October 23, 2015"
 output: ioslides_presentation
 ---
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(fig.height = 4)
+library(ggplot2)
+```
+
 
 ## Who am I
 
@@ -18,10 +28,72 @@ output: ioslides_presentation
 - graphing
 - themes
 
+# Why `ggplot2`
+
 ## Hadleyverse
+
+Data science toolkit in R
 
 - `ggplot2`
 - `dplyr`
 - `tidyr`
 - `lubridate`
+
+## 
+
+abstraction lets you do things quickly
+
+
+
+
+
+
+
+# Grammar of Graphics
+
+
+
+
+# Building a plot in `ggplot2`
+
+## iris data
+
+- included dataset in base R
+- flower morphology for three speices of iris
+
+![three irises](./content/iris.png)
+
+*Brett Bond*
+
+^*taken from: http://articles.concreteinteractive.com/machine-learning-a-new-tool-for-humanity/*^
+
+
+## A simple plot
+
+```{r}
+ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point() 
+```
+
+## Let's add color
+
+```{r}
+ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species)) 
+```
+
+^*let's take a moment to appreciate the automatically generated legend*^
+
+
+# Defining Color Palettes
+
+## Using a new color palette
+Viridis
+
+![Viridis](./content/viridis.png)
+
+
+# Using Themes
+
+
 
