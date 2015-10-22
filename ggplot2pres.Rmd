@@ -1,6 +1,6 @@
 ---
 title: "Getting comfortable with `ggplot2`"
-author: "Derek Nedveck"
+author: "Derek Nedveck  ||  @dnedveck ||  dnedveck@umn.edu"
 company: "Unviersity of Minnesota"
 www: "dnedveck.com"
 github: "dnedveck"
@@ -19,7 +19,7 @@ library(ggplot2)
 - PhD candidate in Plant Biological Sciences, University Minnesota-Twin Cities
 - Thesis on mutalistic interactions
  - genomics, greenhouse experiments
-- Quantified Self: time, weight
+- Quantified Self: time, weight, sleep, activity (walking, biking)
 
 ## What am I going to cover
 
@@ -33,6 +33,8 @@ library(ggplot2)
 
 Data science toolkit in R
 
+a focus on the `data.frame`/`tbl_df`
+
 - `ggplot2`
 - `dplyr`
 - `tidyr`
@@ -40,21 +42,36 @@ Data science toolkit in R
 
 also: `knitr`
 
-# Grammar of Graphics
-
-## Parts of a graph 
-
-- aesthetic
-- geom
-- stat
-
-... this all gets put onto a graph by mapping -- mapping data to things on the graph.
 
 ## plotting systems
 
 base `R` = paper and pencil
 
-ggplot2 layers, transformations, etc. and this gets translated to "paper and pencil"
+`ggplot2` = abstraction
+- layers, transformations, etc. and this gets translated to "paper and pencil"
+
+
+# Grammar of Graphics
+
+## Parts of a graph 
+
+- `data`
+- `aes`thetic
+- `geom`etric objects
+- `stat`istic
+
+these all come together to make up a `layer`
+
+## Overall layering
+
+- data
+- summary / stat
+- metadata - map, annotations 
+ 
+
+## Describing a graph with our new vocab
+
+.. put a graph here
 
 
 # Building a plot in `ggplot2`
@@ -251,10 +268,16 @@ Look inside one:
 theme_bw
 ```
 
+## How to know what you can modify
+
+Look inside one:
+
+also see `theme_grey.r` in my GitHub repo for a nicely formatted one. 
+
 
 ## There's also a ton more premade ones
 
-ggthemes: https://github.com/jrnold/ggthemes
+ggthemes: [https://github.com/jrnold/ggthemes](https://github.com/jrnold/ggthemes)
 ```{r, eval = FALSE}
 library(ggthemes)
 ```
