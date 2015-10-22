@@ -13,6 +13,9 @@ output: ioslides_presentation
 library(ggplot2)
 ```
 
+##
+
+https://github.com/dnedveck/HALICON2015
 
 ## Who am I
 
@@ -28,6 +31,8 @@ library(ggplot2)
 - colors
 - themes
 
+
+# setting the stage
 
 ## Hadleyverse
 
@@ -62,7 +67,7 @@ base `R` = paper and pencil
 
 these all come together to make up a `layer`
 
-## Overall layering
+## different types of layers
 
 - data
 - summary / stat
@@ -71,7 +76,16 @@ these all come together to make up a `layer`
 
 ## Describing a graph with our new vocab
 
-.. put a graph here
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
+ggplot(msleep, aes(x = log(brainwt), y = awake)) + 
+  geom_point(aes(color = vore, shape = vore), size = 5) +
+  labs(title = "Waking hours of mammals",
+       x = "ln(Brain Weight (Kg))",
+       y = "Hours Awake",
+       color = "Diet",
+       shape = "Diet")
+```
+
 
 
 # Building a plot in `ggplot2`
@@ -79,7 +93,7 @@ these all come together to make up a `layer`
 ## iris data
 
 - included dataset in base R
-- flower morphology for three speices of iris
+- flower morphology for three speices of iris -- sepals and petals
 
 ![three irises](./content/iris.png)
 
@@ -123,8 +137,22 @@ ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) +
   stat_smooth(method="lm", aes(color = Species))
 ```
 
-## Facets
+# Facets
 
+## `facet_wrap`
+
+makes a ribbon
+
+```{r}
+ggplot(iris, aes(x = Sepal.Width)) +
+  geom_histogram(binwidth = 0.2) + 
+  facet_wrap( ~ Species)
+```
+
+
+## `facet_grid`
+
+takes two variables
 
 ```{r}
 ggplot(iris, aes(x = Sepal.Width)) + 
@@ -164,6 +192,15 @@ grid.arrange(g.sepal, g.petal)
 
 # Defining Color Palettes
 
+## changing your color palette
+
+```{r}
+ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species), size = 5) +
+  scale_color_brewer(palette = "Set3")
+```
+
+
 ## built in color palettes from `RColorBrewer`
 
 ```{r, echo = FALSE}
@@ -192,7 +229,7 @@ scale_color_gradient(low = "#397DD3", high = "#FF9502")
 
 ## Here's that manual palette I defined
 
-```{r echo = FALSE}
+```{r}
 ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
   geom_point(aes(color = Species), size = 4, alpha = 0.5) +
   scale_color_manual(values = c("#1BE7FF", "#6EEB83", "#FF9502")) + ggtitle("Manually Defined Colors")
@@ -201,6 +238,11 @@ ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) +
 
 
 # Using Themes
+
+## changing your theme
+
+.. code and graph demoing a different theme
+
 
 ## what themes look like
 
@@ -300,4 +342,4 @@ Cookbooks / cheatsheets
 - [R Graphics Cookbook by Winston Chang](http://amzn.to/1GR9bGg)
 - [ggplot2 book by Hadley Wickham](http://amzn.to/1ZUNAbB)
 
-# Thanks
+# Questions?
