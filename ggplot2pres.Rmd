@@ -10,7 +10,6 @@ output: ioslides_presentation
 ---
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE}
-knitr::opts_chunk$set(fig.height = 4)
 library(ggplot2)
 ```
 
@@ -29,7 +28,6 @@ library(ggplot2)
 - colors
 - themes
 
-# Why `ggplot2`
 
 ## Hadleyverse
 
@@ -42,19 +40,15 @@ Data science toolkit in R
 
 also: `knitr`
 
-## why ggplot2
-
-abstraction lets you do things quickly
-
-conceptual basis for plotting
-
-
-
-
-
 # Grammar of Graphics
 
+## Parts of a graph 
 
+- aesthetic
+- geom
+- stat
+
+... this all gets put onto a graph by mapping -- mapping data to things on the graph.
 
 ## plotting systems
 
@@ -115,11 +109,18 @@ ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) +
 ## Facets
 
 
+```{r}
+ggplot(iris, aes(x = Sepal.Width)) + 
+  geom_histogram(binwidth = 0.2) + 
+  facet_grid(Species ~ .)
+```
+
+
 ## Arranging plots
 
 unfortunately there's no way to arrange plots included in `ggplot2`, but there is:
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(gridExtra)
 ```
 
@@ -127,31 +128,40 @@ library(gridExtra)
 grid.arrange()
 ```
 
+## Save your plots as objects
+
+```{r}
+g.sepal <- ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) + 
+  geom_point(aes(color = Species)) + ggtitle("Sepal Scatter plot")
+g.petal <- ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
+  geom_point(aes(color = Species)) + ggtitle("Petal Scatter plot")
+```
+
+## Then plot 
+
+```{r}
+grid.arrange(g.sepal, g.petal)
+```
 
 
 
 # Defining Color Palettes
 
-## built in color palettes
+## built in color palettes from `RColorBrewer`
 
-
-## Using a new color palette
-fancy new Viridis
-
-![Viridis](./content/viridis.png)
-
-
-## using this new color palette in ggplot2
-
-```{r}
-library(viridis)
+```{r, echo = FALSE}
+# making four graphs to show some different color pallettes
+g.brew1 <- ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species), size = 4, alpha = 0.5) +
+  scale_color_brewer(palette = "Set1") + ggtitle("ColorBrewer Set1")
+g.brew2 <- ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species), size = 4, alpha = 0.5) +
+  scale_color_brewer(palette = "Set2") + ggtitle("ColorBrewer Set2")
 ```
 
 
-They were nice enough to include `ggplot2` specific functions:
-
-```{r eval=FALSE}
-scale_color_viridis()
+```{r echo = FALSE}
+grid.arrange(g.brew1, g.brew2)
 ```
 
 
@@ -159,15 +169,17 @@ scale_color_viridis()
 ## What if you have a specific color scheme that you want to work with?
 
 ```{r eval = FALSE}
-scale_colour_manual()
+scale_color_manual(values = c("#1BE7FF", "#6EEB83", "#FF9502"))
+scale_color_gradient(low = "#397DD3", high = "#FF9502")
 ```
 
+## Here's that manual palette I defined
 
-## R packages for color 
+```{r echo = FALSE}
+ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
+  geom_point(aes(color = Species), size = 4, alpha = 0.5) +
+  scale_color_manual(values = c("#1BE7FF", "#6EEB83", "#FF9502")) + ggtitle("Manually Defined Colors")
 
-```{r, eval=FALSE}
-library(RColorBrewer)
-library(ggthemes) # we'll get to this later
 ```
 
 
@@ -211,11 +223,6 @@ theme_dned <- theme_bw() +
         panel.grid.minor = element_line(colour = NA ),
         panel.background = element_rect( fill = "#EFE0B9" ),
         plot.background = element_rect(fill = "#FFFFF0"))
-
-ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) + 
-  geom_point(aes(color = Species)) + 
-  stat_smooth(method="lm", aes(color = Species)) + 
-  theme_dned
 ```
 
 
@@ -236,10 +243,19 @@ ggplot(iris, aes(x = Sepal.Width, y = Petal.Width)) +
 ```
 
 
+## How to know what you can modify
+
+Look inside one:
+
+```{r}
+theme_bw
+```
+
+
 ## There's also a ton more premade ones
 
 ggthemes: https://github.com/jrnold/ggthemes
-```{r}
+```{r, eval = FALSE}
 library(ggthemes)
 ```
 
@@ -254,10 +270,11 @@ Cookbooks / cheatsheets
 - [`ggplot2` docs](http://docs.ggplot2.org/current/)
 - Zev Ross' [ggplot2 Cheatsheet](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/)
 - Winston Chang's [Cookbook for R](http://www.cookbook-r.com/Graphs/)
-- [`ggplot2` GitHub repo](https://github.com/hadley/ggplot2)
+- [`ggplot2` GitHub repo](https://github.com/hadley/ggplot2) -- it's still under active development
 
 ## Books 
 
 - [R Graphics Cookbook by Winston Chang](http://amzn.to/1GR9bGg)
 - [ggplot2 book by Hadley Wickham](http://amzn.to/1ZUNAbB)
 
+# Thanks
